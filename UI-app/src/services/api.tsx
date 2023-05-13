@@ -2,7 +2,7 @@ import axios from "axios";
 import { IMeasureDate, IUserLogin } from "../interfaces/interfaces";
 import Cookies from "universal-cookie";
 
-const getApiHost = (): string => "http://10.10.11.128:5000/api-docs";
+const getApiHost = (): string => "http://10.10.11.128:5000/";
 
 const sendRequest = (
   method: "get" | "post" | "patch" | "delete",
@@ -31,27 +31,21 @@ const sendAuthRequest = (
   });
 
 export const login = async (params: IUserLogin) => {
-  const result = await sendRequest(
-    "post",
-    `${getApiHost()}/api/Auth/post_auth_login`,
-    {
-      ...params,
-    }
-  );
+  console.log("Login");
+  const result = await sendRequest("post", `${getApiHost()}auth/login`, {
+    ...params,
+  });
   return result.data;
 };
 
-export const userData = async (params: IMeasureDate) => {
+export const userData = async () => {
   const cookies = new Cookies();
-  const token = cookies.get(`userToken`);
+  const token = cookies.get("userToken");
 
   const result = await sendAuthRequest(
     "get",
-    `${getApiHost()}/Counter/get_counter_getCountersByUser`,
-    token,
-    {
-      ...params,
-    }
+    `${getApiHost()}data/getCountersByUser`,
+    `Bearer ${token}`
   );
   return result.data;
 };
