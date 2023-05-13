@@ -13,3 +13,16 @@ export interface IMeasureDate {
   monthTotal: Number;
   dailyUsage: IRecordData[];
 }
+
+export interface IUserData {
+  gasData: IMeasureDate;
+  waterData: IMeasureDate;
+}
+
+export interface ITokenUser {
+  exp: number;
+  iat: number;
+  role: string;
+  userId: number;
+  username: string;
+}

@@ -4,9 +4,14 @@ import { Link, Outlet } from "react-router-dom";
 import "./mobile-menu.css";
 
 import React, { useState } from "react";
+import { isLogged, parseJwt, getToken } from "../../hooks/hook";
 
 const MobileHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isUserLogged = isLogged;
+  const isAdmin = parseJwt(getToken())?.role == "ADMIN" ? true : false;
+  const isUser = parseJwt(getToken())?.role == "USER" ? true : false;
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -42,14 +47,18 @@ const MobileHeader = () => {
           </Link>
         </Grid>
         <Grid item className="menu-item">
-          <Link className="link" to="home" onClick={toggleMenu}>
-            Home
-          </Link>
+          {isUserLogged() && isUser && (
+            <Link className="link" to="home" onClick={toggleMenu}>
+              Home
+            </Link>
+          )}
         </Grid>
         <Grid item className="menu-item">
-          <Link className="link" to="graphic" onClick={toggleMenu}>
-            Graphic
-          </Link>
+          {isUserLogged() && isAdmin && (
+            <Link className="link" to="all" onClick={toggleMenu}>
+              All apartments
+            </Link>
+          )}
         </Grid>
       </Collapse>
       <Outlet />
