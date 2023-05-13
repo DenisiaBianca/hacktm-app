@@ -1,7 +1,8 @@
 import { Button, Collapse, Grid, makeStyles } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import "./mobile-menu.css";
+import Cookies from "universal-cookie";
 
 import React, { useState } from "react";
 import { isLogged, parseJwt, getToken } from "../../hooks/hook";
@@ -9,11 +10,20 @@ import { isLogged, parseJwt, getToken } from "../../hooks/hook";
 const MobileHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isUserLogged = isLogged;
+  const navigate = useNavigate();
   const isAdmin = parseJwt(getToken())?.role == "ADMIN" ? true : false;
   const isUser = parseJwt(getToken())?.role == "USER" ? true : false;
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    const cookies = new Cookies();
+    cookies.set("userToken", null);
+    navigate("/");
+
+    window.location.reload();
   };
 
   return (
@@ -25,10 +35,17 @@ const MobileHeader = () => {
         alignItems="center"
         style={{ marginTop: "10px", backgroundColor: "white" }}
       >
-        <Grid>
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          style={{ paddingRight: "10px" }}
+        >
           <Button onClick={toggleMenu}>
             <MenuIcon />
           </Button>
+          <Button onClick={handleLogout}>{isLogged() ? "Logout" : ""}</Button>
         </Grid>
       </Grid>
       <Collapse

@@ -17,7 +17,8 @@ const UserHome = () => {
   const [waterData, setWaterData] = useState<IMeasureDate>(empty);
 
   useEffect(() => {
-    setInterval(handleUserData, 5000);
+    handleUserData();
+    setInterval(handleUserData, 2000);
   }, []);
 
   const handleUserData = async () => {

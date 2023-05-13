@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,6 +10,8 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { useMobile } from "../../hooks/hook";
+import { IAdminBoard, IApMeasure } from "../../interfaces/interfaces";
+import { adminData } from "../../services/api";
 
 ChartJS.register(
   CategoryScale,
@@ -22,6 +24,23 @@ ChartJS.register(
 
 const AdminHome = () => {
   const isMobile = useMobile();
+  const [gasData, setGasData] = useState<IApMeasure[]>([]);
+  const [waterData, setWaterData] = useState<IApMeasure[]>([]);
+
+  useEffect(() => {
+    handleUserData();
+    setInterval(handleUserData, 2000);
+  }, []);
+
+  const handleUserData = async () => {
+    const data: IAdminBoard = await adminData();
+
+    if (data.gas != null) setGasData(data.gas);
+    if (data.water != null) setWaterData(data.water);
+
+    console.log(gasData);
+  };
+
   const options = {
     indexAxis: "y" as const,
     elements: {
@@ -60,13 +79,13 @@ const AdminHome = () => {
     datasets: [
       {
         label: "Gas",
-        data: [100, 300, 400, 200, 150, 100, 50, 60, 30],
+        data: gasData.map((d) => d.usage),
         borderColor: "rgba(220,20,60,0.5)",
         backgroundColor: "rgba(220,20,60,0.5)",
       },
       {
         label: "Water",
-        data: [130, 200, 440, 230, 170],
+        data: waterData.map((d) => d.usage),
         borderColor: "rgba(44, 130, 201, 0.5)",
         backgroundColor: "rgba(44, 130, 201, 0.5)",
       },

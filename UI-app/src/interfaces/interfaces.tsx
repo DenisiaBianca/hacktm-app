@@ -26,3 +26,12 @@ export interface ITokenUser {
   userId: number;
   username: string;
 }
+
+export interface IApMeasure {
+  id: Number;
+  usage: Number;
+}
+export interface IAdminBoard {
+  gas: IApMeasure[];
+  water: IApMeasure[];
+}

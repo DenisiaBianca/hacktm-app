@@ -26,6 +26,8 @@ const Login = () => {
 
     if (isAdmin) navigate("/all");
     if (isUser) navigate("/home");
+
+    window.location.reload();
   };
 
   return (

@@ -1,4 +1,5 @@
 import { Breakpoint, useMediaQuery, useTheme } from "@mui/material";
+import { stringify } from "querystring";
 import { createContext, useContext, useState } from "react";
 import { useMount } from "react-use";
 import Cookies from "universal-cookie";
@@ -39,7 +40,8 @@ export const useMobile = (options?: Options): boolean => {
 
 export const isLogged = (): boolean => {
   const cookies = new Cookies();
-  return cookies.get("userToken") == null ? false : true;
+  console.log(cookies.get("userToken"));
+  return cookies.get("userToken") !== "";
 };
 
 export const getToken = (): string => {

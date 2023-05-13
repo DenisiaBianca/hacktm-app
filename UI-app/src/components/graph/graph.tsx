@@ -106,7 +106,7 @@ const Graphic: React.FC<IProps> = (props) => {
     datasets: [
       {
         label: props.title.toString(),
-        data: props.data.slice(0, Number(today)).map((d) => d.value),
+        data: props.data.slice(Number(0), 24).map((d) => d.value),
         borderColor: props.color.toString(),
         backgroundColor: props.color.toString(),
         fill: true,

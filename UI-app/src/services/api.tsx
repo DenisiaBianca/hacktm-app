@@ -49,3 +49,15 @@ export const userData = async () => {
   );
   return result.data;
 };
+
+export const adminData = async () => {
+  const cookies = new Cookies();
+  const token = cookies.get("userToken");
+
+  const result = await sendAuthRequest(
+    "get",
+    `${getApiHost()}data/getCounters`,
+    `Bearer ${token}`
+  );
+  return result.data;
+};
