@@ -106,7 +106,7 @@ const Graphic: React.FC<IProps> = (props) => {
     datasets: [
       {
         label: props.title.toString(),
-        data: props.data.slice(Number(0), 24).map((d) => d.value),
+        data: props.data.slice(24 - Number(today), 24).map((d) => d.value),
         borderColor: props.color.toString(),
         backgroundColor: props.color.toString(),
         fill: true,
@@ -124,6 +124,8 @@ const Graphic: React.FC<IProps> = (props) => {
       <Line
         options={options}
         data={data}
+        width={1000}
+        height={500}
         style={{
           minWidth: "100%",
           width: "100%",

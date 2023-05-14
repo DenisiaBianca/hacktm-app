@@ -35,3 +35,7 @@ export interface IAdminBoard {
   gas: IApMeasure[];
   water: IApMeasure[];
 }
+
+export interface IHomeAlone {
+  homeAlone: boolean;
+}

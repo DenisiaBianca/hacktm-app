@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IMeasureDate, IUserLogin } from "../interfaces/interfaces";
+import { IHomeAlone, IMeasureDate, IUserLogin } from "../interfaces/interfaces";
 import Cookies from "universal-cookie";
 
 const getApiHost = (): string => "http://10.10.11.128:5000/";
@@ -58,6 +58,19 @@ export const adminData = async () => {
     "get",
     `${getApiHost()}data/getCounters`,
     `Bearer ${token}`
+  );
+  return result.data;
+};
+
+export const leftHome = async (params: IHomeAlone) => {
+  const cookies = new Cookies();
+  const token = cookies.get("userToken");
+
+  const result = await sendAuthRequest(
+    "post",
+    `${getApiHost()}data/homeAlone`,
+    `Bearer ${token}`,
+    { ...params }
   );
   return result.data;
 };
