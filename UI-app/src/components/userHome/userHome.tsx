@@ -10,9 +10,6 @@ import {
 import { leftHome, userData } from "../../services/api";
 import GraphData from "../graph/graph-data";
 import Cookies from "universal-cookie";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { stringify } from "querystring";
 
 const empty = {
   currentRead: 0,
@@ -30,7 +27,7 @@ const UserHome = () => {
   useEffect(() => {
     handleUserData();
     setHomeButton();
-    setInterval(handleUserData, 2000);
+    setInterval(handleUserData, 10000);
   }, []);
 
   const handleUserData = async () => {
